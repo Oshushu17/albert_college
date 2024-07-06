@@ -1,0 +1,59 @@
+from django.shortcuts import render, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import json
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
+from rest_framework.mixins import ListModelMixin, CreateModelMixin, DestroyModelMixin
+from .models import Parent, Student, ClassRoom
+from .serializer import ParentSerializers, StudentSerializers, ClassRoomSerializers
+# Create your views here.
+
+
+def say_hello(request):
+    return render( request, 'hello.html', {'name':''})
+
+class ParentViewset(ListModelMixin, CreateModelMixin, GenericViewSet):
+        queryset = Parent.objects.all()
+        serializer_class = ParentSerializers
+
+class StudentViewset(ListModelMixin, CreateModelMixin, GenericViewSet):
+      queryset = Student.objects.all()
+      serializer_class = StudentSerializers
+
+# class ClassRoomViewset(ListModelMixin, CreateModelMixin, DestroyModelMixin, GenericViewSet):
+#       queryset = ClassRoom.objects.all()
+#       serializer_class = ClassRoomSerializers
+
+@api_view(['GET', 'POST'])
+@csrf_exempt
+def classroom_list(request):
+      if request.method == "GET":
+            classrooms = ClassRoom.objects.all()
+            serializer = ClassRoomSerializers(classrooms, many=True)
+            return Response(serializer.data)
+      elif request.method == 'POST':
+            serializer = ClassRoomSerializers(data = request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+      
+@api_view(['GET','PUT', 'DELETE'])
+@csrf_exempt
+def classroom_detail(request, id):
+      print(request.method)
+      classrooms = get_object_or_404(ClassRoom, pk=id)
+      if request.method == 'GET':
+            serializer = ClassRoomSerializers(classrooms)
+            return Response(serializer.data)
+      elif request.method == 'PUT':
+            serializer = ClassRoomSerializers(classrooms, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+      elif request.method == "DELETE":
+            classrooms.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+            

@@ -7,7 +7,7 @@ from .models import Parent, Student, ClassRoom
 class ParentSerializers(serializers.ModelSerializer):
     class Meta:
         model = Parent
-        fields = ['first_name', 'last_name', 'home_address', 'email']
+        fields = ['id','first_name', 'last_name', 'home_address', 'email']
 
 
 class StudentSerializers(serializers.ModelSerializer):

@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6gdp8hfla+!%l%di=*y2lg@i+=*z61y84m(k$3d7r&=m1*fri1'
+SECRET_KEY = 'hidden'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -90,8 +90,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'schoolfrontend',
         'HOST': '127.0.0.1',
-        'USER': 'jhaydjango',
-        'PASSWORD':'Naskidjay007#',
+        'USER': 'hidden',
+        'PASSWORD':'hidden',
     }
 }
 

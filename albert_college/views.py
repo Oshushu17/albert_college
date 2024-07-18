@@ -1,7 +1,5 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-import json
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -12,22 +10,10 @@ from .serializer import ParentSerializers, StudentSerializers, ClassRoomSerializ
 # Create your views here.
 
 
-def say_hello(request):
-    return render( request, 'hello.html', {'name':''})
-
-# class ParentViewset(ListModelMixin, CreateModelMixin, GenericViewSet):
-#         queryset = Parent.objects.all()
-#         serializer_class = ParentSerializers
-
-
 
 class StudentViewset(ListModelMixin, CreateModelMixin, GenericViewSet):
       queryset = Student.objects.all()
       serializer_class = StudentSerializers
-
-# class ClassRoomViewset(ListModelMixin, CreateModelMixin, DestroyModelMixin, GenericViewSet):
-#       queryset = ClassRoom.objects.all()
-#       serializer_class = ClassRoomSerializers
 
 @api_view(['GET', 'POST'])
 @csrf_exempt
